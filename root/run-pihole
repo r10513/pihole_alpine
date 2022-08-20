@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+IP=`grep $(cat /etc/hostname) /etc/hosts | cut -f1`
+
+echo "* network address is:" $IP
+echo "* adjusting the variables"
+
+echo "BLOCKING_ENABLED=true" >/etc/pihole/setupVars.conf
+echo "DNSSEC=$DNSSEC" >>/etc/pihole/setupVars.conf
+echo "REV_SERVER=$REV_SERVER" >>/etc/pihole/setupVars.conf
+echo "REV_SERVER_CIDR=$REV_SERVER_CIDR" >>/etc/pihole/setupVars.conf
+echo "REV_SERVER_TARGET=$REV_SERVER_TARGET" >>/etc/pihole/setupVars.conf
+echo "REV_SERVER_DOMAIN=$REV_SERVER_DOMAIN" >>/etc/pihole/setupVars.conf
+echo "PIHOLE_INTERFACE=eth0" >>/etc/pihole/setupVars.conf
+echo "PIHOLE_DNS_1=$DNS1" >>/etc/pihole/setupVars.conf
+echo "PIHOLE_DNS_2=$DNS2" >>/etc/pihole/setupVars.conf
+echo "QUERY_LOGGING=true" >>/etc/pihole/setupVars.conf
+echo "INSTALL_WEB_SERVER=true" >>/etc/pihole/setupVars.conf
+echo "INSTALL_WEB_INTERFACE=true" >>/etc/pihole/setupVars.conf
+echo "LIGHTTPD_ENABLED=true" >>/etc/pihole/setupVars.conf
+echo "CACHE_SIZE=10000" >>/etc/pihole/setupVars.conf
+echo "DNS_FQDN_REQUIRED=true" >>/etc/pihole/setupVars.conf
+echo "DNS_BOGUS_PRIV=true" >>/etc/pihole/setupVars.conf
+echo "DNSMASQ_LISTENING=local" >>/etc/pihole/setupVars.conf
+echo "USER_DOWNLOAD_BINARIES=1" >>/etc/pihole/setupVars.conf
+
+echo "* adjusting dhcpd configuration"
+
+cp /root/dhcpcd.conf /etc
+echo "        static ip_address=$IP/24" >>/etc/dhcpcd.conf
+echo "        static routers=$REV_SERVER_TARGET" >>/etc/dhcpcd.conf
+echo "        static domain_name_servers=." >>/etc/dhcpcd.conf
+
+echo "* adjusting timezone"
+
+cp /usr/share/zoneinfo/$TZ /etc/localtime
+echo "$TZ" > /etc/datetime
+
+echo "* starting pihole"
+
+openrc
+pihole restartdns
+pihole -a -p $WEBPASSWORD
+
+echo "* running forever"
+
+sleep infinity
