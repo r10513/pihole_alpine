@@ -10,15 +10,15 @@ docker run --name pihole_alpine -p 80:80 -p 53:53/udp --net bridge_fritz --ip IP
 
 Parameters:
 
-TZ "Europe/Berlin"
-WEBPASSWORD password
-REV_SERVER true
-REV_SERVER_TARGET 10.2.3.1
-REV_SERVER_DOMAIN local.domain
-REV_SERVER_CIDR 10.2.3.4/24
-DNSSEC true
-DNS1 127.0.0.1#5335
-DNS2 127.0.0.1#5335
+* TZ "Europe/Berlin"
+* WEBPASSWORD password
+* REV_SERVER true
+* REV_SERVER_TARGET 10.2.3.1
+* REV_SERVER_DOMAIN local.domain
+* REV_SERVER_CIDR 10.2.3.4/24
+* DNSSEC true
+* DNS1 127.0.0.1#5335
+* DNS2 127.0.0.1#5335
 
 Size:
 
