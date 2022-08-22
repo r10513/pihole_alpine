@@ -12,7 +12,6 @@ Parameters:
 
 If you do not specify one or more of the parameters above, the container will start with some defaults:
 
-
 * TZ "Europe/Berlin"
 * WEBPASSWORD password
 * REV_SERVER true
@@ -23,7 +22,7 @@ If you do not specify one or more of the parameters above, the container will st
 * DNS1 127.0.0.1#5335
 * DNS2 127.0.0.1#5335
 
-The parameters enclosed in < > are to be customized. As I want to give the docker image an IP address in the same network as my home lan (and not in 172.17....) I defined a network (see --net parameter).
+The parameters enclosed in [ ] are to be customized. As I want to give the docker image an IP address in the same network as my home lan (and not in 172.17....) I defined a network (see --net parameter).
 
 Size:
 
