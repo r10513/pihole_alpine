@@ -6,7 +6,7 @@ docker build -t pihole_alpine:1.0 .
 
 How to run:
 
-docker run --name pihole_alpine -p 80:80 -p 53:53/udp --net bridge_fritz --ip IP  --privileged --cap-add=NET_ADMIN --restart=unless-stopped -e REV_SERVER_TARGET=xxx -e WEBPASSWORD=yyy -e REV_SERVER_CIDR=zzz/24 -e REV_SERVER_DOMAIN=domain.lan --hostname=pihole pihole_alpine:1.0
+docker run --name pihole_alpine -p 80:80 -p 53:53/udp --net <your network> --ip <ip of the docker image>  --privileged --cap-add=NET_ADMIN --restart=unless-stopped -e REV_SERVER_TARGET=<xxx> -e WEBPASSWORD=<yyy> -e REV_SERVER_CIDR=<zzz>/24 -e REV_SERVER_DOMAIN=<domain.lan> --hostname=pihole pihole_alpine:1.0
 
 Parameters:
 
@@ -19,6 +19,8 @@ Parameters:
 * DNSSEC true
 * DNS1 127.0.0.1#5335
 * DNS2 127.0.0.1#5335
+
+The parameters enclosed in < > are to be customized. As I want to give the docker image an IP address in the same network as my home lan (and not in 172.17....) I defined a network (see --net parameter).
 
 Size:
 
