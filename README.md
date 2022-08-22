@@ -6,9 +6,12 @@ docker build -t pihole_alpine:1.0 .
 
 How to run:
 
-docker run --name pihole_alpine -p 80:80 -p 53:53/udp --net <aaa> --ip <bbb>  --privileged --cap-add=NET_ADMIN --restart=unless-stopped -e REV_SERVER_TARGET=<xxx> -e WEBPASSWORD=<yyy> -e REV_SERVER_CIDR=<zzz>/24 -e REV_SERVER_DOMAIN=<kkk> --hostname=pihole pihole_alpine:1.0
+docker run --name pihole_alpine -p 80:80 -p 53:53/udp --net [aaa] --ip [bbb]  --privileged --cap-add=NET_ADMIN --restart=unless-stopped -e REV_SERVER_TARGET=[xxx] -e WEBPASSWORD=[yyy] -e REV_SERVER_CIDR=[zzz]/24 -e REV_SERVER_DOMAIN=[kkk] --hostname=pihole pihole_alpine:1.0
 
 Parameters:
+
+If you do not specify one or more of the parameters above, the container will start with some defaults:
+
 
 * TZ "Europe/Berlin"
 * WEBPASSWORD password
