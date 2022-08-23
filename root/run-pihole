@@ -2,8 +2,8 @@
 
 IP=`grep $(cat /etc/hostname) /etc/hosts | cut -f1`
 
-echo "* network address is:" $IP
-echo "* adjusting the variables"
+echo "*" $(date) "network address is:" $IP
+echo "*" $(date) "adjusting the variables"
 
 echo "BLOCKING_ENABLED=true" >/etc/pihole/setupVars.conf
 echo "DNSSEC=$DNSSEC" >>/etc/pihole/setupVars.conf
@@ -24,24 +24,27 @@ echo "DNS_BOGUS_PRIV=true" >>/etc/pihole/setupVars.conf
 echo "DNSMASQ_LISTENING=local" >>/etc/pihole/setupVars.conf
 echo "USER_DOWNLOAD_BINARIES=1" >>/etc/pihole/setupVars.conf
 
-echo "* adjusting dhcpd configuration"
+cat /etc/pihole/setupVars.conf
+echo "WEBPASSWORD="$WEBPASSWORD
+
+echo "*" $(date) "adjusting dhcpd configuration"
 
 cp /root/dhcpcd.conf /etc
 echo "        static ip_address=$IP/24" >>/etc/dhcpcd.conf
 echo "        static routers=$REV_SERVER_TARGET" >>/etc/dhcpcd.conf
 echo "        static domain_name_servers=." >>/etc/dhcpcd.conf
 
-echo "* adjusting timezone"
+echo "*" $(date) "adjusting timezone to" $TZ
 
 cp /usr/share/zoneinfo/$TZ /etc/localtime
 echo "$TZ" > /etc/datetime
 
-echo "* starting pihole"
+echo "*" $(date) "starting pihole"
 
 openrc
 pihole restartdns
 pihole -a -p $WEBPASSWORD
 
-echo "* running forever"
+echo "*" $(date) "running forever"
 
 sleep infinity
